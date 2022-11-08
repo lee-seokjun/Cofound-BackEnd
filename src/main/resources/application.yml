@@ -1,0 +1,62 @@
+
+server:
+  port: 8000
+spring:
+  config:
+    import: "optional:configserver:"
+  profiles:
+    active: local
+  application:
+    name: COFOUND-APIGATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: test-service
+          uri: lb://TEST-SERVICE
+          predicates:
+            - Path=/test-service/login
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/test-service/(?<segment>.*),/$\{segment}
+        - id: test-service
+          uri: lb://TEST-SERVICE
+          predicates:
+            - Path=/test-service/member/create
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/test-service/(?<segment>.*),/$\{segment}
+        - id: test-service
+          uri: lb://TEST-SERVICE
+          predicates:
+            - Path=/test-service/any/**
+            - Method=POST,GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/test-service/(?<segment>.*),/$\{segment}
+
+        - id: test-service
+          uri: lb://TEST-SERVICE
+          predicates:
+            - Path=/test-service/member/**
+            - Method=POST,GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/test-service/(?<segment>.*),/$\{segment}
+            - AuthorizationHeaderFilter
+    config:
+      uri: http://127.0.0.1:8888
+      name: user-service
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans , httptrace, busrefresh,env
