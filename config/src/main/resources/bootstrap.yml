@@ -1,0 +1,8 @@
+encrypt:
+  key-store:
+    #    location: file:///C:/seoklee/config_key/apiEncryptionKey.jks
+#    location: file:///C:/seoklee/cofoundtest/cofound-member/cofound-config/apiEncryptionKey.jks
+    location: file:/apiEncryptionKey.jks
+    password: test1234
+    alias: apiEncryptionKey
+#  key: abcdefghijklmnopqrstuvwxyz0123456789
