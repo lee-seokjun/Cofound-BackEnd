@@ -1,0 +1,1 @@
+insert into member (id, email, encrypted_pwd, name, member_id) values (default, 'test@test.com', '$2a$10$3J6SJbuK4MYCY4oIsFsiCeYr/M8NHMlpigLbWix3jGzB6IxYL4Jx6', 'name', 'd2971763-9d5f-4337-89cc-072dddb15a19')

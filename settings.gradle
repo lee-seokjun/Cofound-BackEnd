@@ -1,0 +1,10 @@
+rootProject.name = 'cofound-member'
+include 'member-application'
+include 'domain'
+include 'domain:member'
+include 'domain-core'
+include 'domain:member:member-dto'
+include 'domain:member:member-service'
+include 'domain:member:member-jpa'
+include 'member-core:member-domain'
+
