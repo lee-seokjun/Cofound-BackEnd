@@ -1,8 +1,9 @@
 encrypt:
   key-store:
     #    location: file:///C:/seoklee/config_key/apiEncryptionKey.jks
-#    location: file:///C:/seoklee/cofoundtest/cofound-member/cofound-config/apiEncryptionKey.jks
-    location: file:/apiEncryptionKey.jks
+    location: file:///C:/seoklee/Cofound-BackEnd/config/apiEncryptionKey.jks
+    # 본인의 local 환경에 맞게 위 주소에 맞춰 변경하셔야합니다.
+#    location: file:/apiEncryptionKey.jks
     password: test1234
     alias: apiEncryptionKey
 #  key: abcdefghijklmnopqrstuvwxyz0123456789
