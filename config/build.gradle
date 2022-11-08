@@ -19,6 +19,7 @@ ext {
 dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-config-server'
 	implementation 'org.springframework.cloud:spring-cloud-starter'
+	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
