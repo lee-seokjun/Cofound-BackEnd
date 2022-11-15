@@ -19,7 +19,6 @@ public class MemberFactory {
         Member member = new Member(dto);
         member.setMemberId(UUID.randomUUID().toString());
         member.setEncryptedPwd(encodePassword(dto.getPassword()));
-//        member.setEncryptedPwd(dto.getPassword());
         return member;
     }
 

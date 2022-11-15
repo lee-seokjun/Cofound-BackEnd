@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MemberJpa extends CrudRepository<Member,Long> {
+public interface MemberJpa extends CrudRepository<Member,String> {
     public Member findByEmail(String username);
     public Member findByMemberId(String memberId);
 

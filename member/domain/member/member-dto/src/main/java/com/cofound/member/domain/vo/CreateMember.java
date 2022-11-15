@@ -6,6 +6,5 @@ import lombok.Getter;
 public class CreateMember {
     private String email;
     private String password;
-    private String name;
-
+    private String nickName;
 }

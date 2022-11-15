@@ -13,9 +13,8 @@ public class MemberDto {
     {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     }
-    private Long id;
     private String email;
-    private String name;
+    private String nickName;
     private String memberId;
     private String password;
     private String encryptedPwd;
