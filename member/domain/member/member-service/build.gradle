@@ -2,4 +2,5 @@ dependencies {
     implementation ("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     implementation project(':domain:member:member-dto')
     implementation project(':domain:member:member-jpa')
+    implementation project (':member-core:member-domain')
 }

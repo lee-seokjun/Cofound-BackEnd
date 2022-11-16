@@ -3,6 +3,7 @@ package com.cofound.member.security;
 import com.cofound.member.domain.dto.MemberDto;
 import com.cofound.member.domain.interfaces.MemberService;
 import com.cofound.member.domain.service.MemberServiceImpl;
+import com.cofound.member.exception.NotFoundMemberException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +12,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,12 +24,13 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 @Slf4j
 public class SecurityConfig  {
 
@@ -46,7 +47,11 @@ public class SecurityConfig  {
     public WebSecurityCustomizer webSecurityCustomizer(){
         return web ->
             web.ignoring()
-                    .antMatchers("/any/**","/h2-console/**","/member/create/**")
+                    .antMatchers("/join/**")
+                    .antMatchers("/h2-console/**")
+                    .antMatchers("/swagger-ui/**","/swagger-resources/**","/v2/api-docs",  "/configuration/ui",
+                            "/swagger-resources", "/configuration/security",
+                            "/swagger-ui.html", "/webjars/**","/swagger/**")
         ;
     }
 
@@ -61,8 +66,14 @@ public class SecurityConfig  {
     @Bean
     public UserDetailsService userDetailsService(MemberService memberService ) {
 
-        return username -> {
-            MemberDto member = memberService.findByMemberEmail(username);
+        return email -> {
+            MemberDto member ;
+            try {
+                member = memberService.findByMemberEmail(email);
+            }catch (NotFoundMemberException e){
+                return new User("notFound","notFound",new ArrayList<>());
+            }
+
             Set<GrantedAuthority> grant = new HashSet<>();
             grant.add((GrantedAuthority) () -> "TESETSETEST");
             return new User(member.getEmail(),member.getEncryptedPwd(),true,true,true,true,grant);

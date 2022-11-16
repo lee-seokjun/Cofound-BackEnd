@@ -56,6 +56,8 @@ project (':member-application'){
         implementation project (':domain:member:member-dto')
         implementation project (':domain:member:member-jpa')
         implementation project (':member-core:member-domain')
+        implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+        implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
     }
 
 }
