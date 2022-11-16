@@ -5,6 +5,7 @@ import com.cofound.member.domain.entity.Member;
 import com.cofound.member.domain.entity.MemberFactory;
 import com.cofound.member.domain.entity.MemberJpa;
 import com.cofound.member.domain.interfaces.MemberStore;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Repository
+@Slf4j
 public class MemberJpaStore implements MemberStore {
 
     private MemberJpa memberJpa;
@@ -34,19 +36,23 @@ public class MemberJpaStore implements MemberStore {
 
     @Override
     public MemberDto findByMemberId(String memberId) {
-        return mapper.map(memberJpa.findByMemberId(memberId),MemberDto.class);
+        return Member.toDto(memberJpa.findByMemberId(memberId));
     }
 
     @Override
     public Stream<MemberDto> findAllMember() {
-        return StreamSupport.stream(memberJpa.findAll().spliterator(),false).map(c-> mapper.map(c,MemberDto.class));
+        Iterable<Member> memberList=memberJpa.findAll();
+        return StreamSupport.stream(memberList.spliterator(),false).map(c-> mapper.map(c,MemberDto.class));
     }
 
     @Override
     public MemberDto findByMemberEmail(String email) {
-        return mapper.map(memberJpa.findByEmail(email),MemberDto.class);
+        return Member.toDto(memberJpa.findByEmail(email));
     }
-
+    @Override
+    public MemberDto findByNickName(String nickName) {
+        return Member.toDto(memberJpa.findByNickName(nickName));
+    }
     @Override
     @Transactional
     public void deleteMember(String memberId) {

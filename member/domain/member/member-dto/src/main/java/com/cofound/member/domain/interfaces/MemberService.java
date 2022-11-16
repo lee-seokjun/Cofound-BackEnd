@@ -12,5 +12,6 @@ public interface MemberService {
     Stream<MemberDto> findAllMember();
 
     MemberDto findByMemberEmail(String email);
-    public void deleteMember(String memberId);
+    void deleteMember(String memberId);
+    MemberDto findByNickName(String nickName);
 }

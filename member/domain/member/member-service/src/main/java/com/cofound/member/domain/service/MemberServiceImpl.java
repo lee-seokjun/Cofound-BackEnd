@@ -50,4 +50,8 @@ public class MemberServiceImpl implements MemberService {
         memberJpaStore.deleteMember(memberId);
     }
 
+    @Override
+    public MemberDto findByNickName(String nickName) {
+        return memberJpaStore.findByNickName(nickName);
+    }
 }

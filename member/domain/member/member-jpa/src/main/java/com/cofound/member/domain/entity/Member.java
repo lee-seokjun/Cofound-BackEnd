@@ -2,10 +2,12 @@ package com.cofound.member.domain.entity;
 
 
 import com.cofound.member.domain.dto.MemberDto;
+import com.cofound.member.exception.NotFoundMemberException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -52,5 +54,12 @@ public class Member {
         this.email =dto.getEmail();
         this.nickName = dto.getNickName();
         this.deleted_flag ="N";
+    }
+    public static MemberDto toDto(Member member){
+        ModelMapper mapper = new ModelMapper();
+        if(member==null){
+            throw new NotFoundMemberException();
+        }
+        return mapper.map(member,MemberDto.class);
     }
 }

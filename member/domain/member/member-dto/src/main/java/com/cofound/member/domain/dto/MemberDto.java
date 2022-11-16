@@ -2,6 +2,7 @@ package com.cofound.member.domain.dto;
 
 
 import com.cofound.member.domain.vo.CreateMember;
+import com.cofound.member.domain.vo.ResponseMember;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -24,4 +25,7 @@ public class MemberDto {
     }
 
 
+    public ResponseMember toResponse(){
+        return new ResponseMember(this.email,this.nickName,this.memberId);
+    }
 }

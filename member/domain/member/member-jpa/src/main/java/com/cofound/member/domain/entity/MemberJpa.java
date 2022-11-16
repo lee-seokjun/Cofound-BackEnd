@@ -6,8 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MemberJpa extends CrudRepository<Member,String> {
-    public Member findByEmail(String username);
-    public Member findByMemberId(String memberId);
+    Member findByEmail(String username);
+    Member findByNickName(String nickName);
+    Member findByMemberId(String memberId);
 
     void deleteByMemberId(String memberId);
 
