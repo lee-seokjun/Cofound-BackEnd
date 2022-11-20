@@ -5,6 +5,7 @@ import com.cofound.member.CofoundHeader;
 import com.cofound.member.CofoundKey;
 import com.cofound.member.domain.dto.MemberDto;
 import com.cofound.member.domain.service.MemberServiceImpl;
+import com.cofound.member.exception.NotFoundMemberException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,7 +19,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
+//@Component
 public class AuthenticationProcessingFilterConfig {
     //AbstractAuthenticationProcessingFilter를 만들기 위한 빌드다..
     private final MemberServiceImpl memberService;
@@ -66,8 +66,13 @@ public class AuthenticationProcessingFilterConfig {
                     , FilterChain chain
                     , Authentication authResult) {
                 String email = ((User)authResult.getPrincipal()).getUsername();
-                MemberDto userDto= memberService.findByMemberEmail(email);
-
+                MemberDto userDto;
+                try {
+                     userDto = memberService.findByMemberEmail(email);
+                }catch(NotFoundMemberException e)
+                {
+                    return;
+                }
                 String token = Jwts.builder()
                         .setSubject(userDto.getMemberId())
                         .setExpiration(new Date(System.currentTimeMillis()+Long.parseLong(env.getProperty(CofoundKey.TOKEN_EXPIRATION_TIME,CofoundDefault.DEFAULT_TOKEN_EXPIRATION_TIME))))
