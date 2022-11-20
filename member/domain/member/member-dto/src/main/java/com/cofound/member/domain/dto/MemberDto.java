@@ -7,6 +7,7 @@ import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
+import java.util.Objects;
 
 @Data
 public class MemberDto {
@@ -27,5 +28,8 @@ public class MemberDto {
 
     public ResponseMember toResponse(){
         return new ResponseMember(this.email,this.nickName,this.memberId);
+    }
+    public boolean isEmpty(){
+        return Objects.isNull(memberId);
     }
 }
